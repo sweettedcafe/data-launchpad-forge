@@ -1,8 +1,9 @@
 // Smart cell formatter for query results.
 // Detects date/timestamp columns by name AND value heuristics so epoch numbers
-// (e.g. 1723420800000) render as ISO dates instead of giant integers.
+// (e.g. 1723420800000 or "1723420800000") render as readable calendar dates.
 
-const DATE_COL_RE = /(^|_)(date|at|on|time|timestamp|day|month|year|dob|birthday|created|updated|signup|order_date|ship_date)(_|$)/i;
+const DATE_COL_RE = /(^|_)(date|at|on|time|timestamp|day|month|year|dob|birthday|created|updated|reviewed|completed|issued|signup|order_date|ship_date)(_|$)/i;
+const NUMERIC_DATE_RE = /^\d{10,16}$/;
 
 function toDate(value: any): Date | null {
   if (value == null) return null;
@@ -16,7 +17,16 @@ function toDate(value: any): Date | null {
   }
   if (typeof value === "bigint") return toDate(Number(value));
   if (typeof value === "string") {
-    if (/^\d{4}-\d{2}-\d{2}/.test(value)) {
+    const trimmed = value.trim();
+    if (NUMERIC_DATE_RE.test(trimmed)) {
+      return toDate(Number(trimmed));
+    }
+    if (/^\d{4}[-/]\d{2}[-/]\d{2}/.test(trimmed) || /[t\s]\d{2}:\d{2}/i.test(trimmed)) {
+      const normalized = /^\d{4}\/\d{2}\/\d{2}/.test(trimmed) ? trimmed.replace(/\//g, "-") : trimmed;
+      const d = new Date(normalized);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    if (/^\d{4}-\d{2}-\d{2}/.test(trimmed)) {
       const d = new Date(value);
       return isNaN(d.getTime()) ? null : d;
     }
@@ -28,10 +38,10 @@ function fmt(d: Date, withTime: boolean) {
   const y = d.getUTCFullYear();
   const m = String(d.getUTCMonth() + 1).padStart(2, "0");
   const day = String(d.getUTCDate()).padStart(2, "0");
-  if (!withTime) return `${y}-${m}-${day}`;
+  if (!withTime) return `${y}/${m}/${day}`;
   const hh = String(d.getUTCHours()).padStart(2, "0");
   const mm = String(d.getUTCMinutes()).padStart(2, "0");
-  return `${y}-${m}-${day} ${hh}:${mm}`;
+  return `${y}/${m}/${day} ${hh}:${mm}`;
 }
 
 export function formatCell(column: string, value: any): React.ReactNode {
@@ -40,7 +50,7 @@ export function formatCell(column: string, value: any): React.ReactNode {
   if (looksLikeDateCol) {
     const d = toDate(value);
     if (d) {
-      const hasTime = /(time|timestamp|_at$|^at$)/i.test(column);
+      const hasTime = /(time|timestamp|_at$|^at$)/i.test(column) || (typeof value === "string" && /[t\s]\d{2}:\d{2}/i.test(value));
       return fmt(d, hasTime);
     }
   }
