@@ -92,6 +92,8 @@ const adminNav = [
   { to: "/admin/curriculum", label: "Curriculum", icon: BookOpen },
   { to: "/admin/datasets", label: "Datasets", icon: Code2 },
   { to: "/admin/submissions", label: "Submissions", icon: Briefcase },
+  { to: "/admin/interview", label: "Interview bank", icon: MessageSquare },
+  { to: "/admin/mock-interviews", label: "Mock reviews", icon: Mic },
   { to: "/admin/certificates", label: "Certificates", icon: Award },
 ];
 
