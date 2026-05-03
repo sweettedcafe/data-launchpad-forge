@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { formatCell } from "@/lib/format";
 
 export default function AdminMockReviews() {
   const [sessions, setSessions] = useState<any[]>([]);
@@ -65,7 +66,7 @@ export default function AdminMockReviews() {
             <Card key={s.id} className={`cursor-pointer ${active?.id === s.id ? "ring-2 ring-primary" : ""}`} onClick={() => openSession(s)}>
               <CardContent className="p-3">
                 <div className="font-medium text-sm">{profiles[s.user_id]?.full_name ?? profiles[s.user_id]?.email ?? "Learner"}</div>
-                <div className="text-xs text-muted-foreground">{s.title} · {new Date(s.created_at).toLocaleDateString()}</div>
+                <div className="text-xs text-muted-foreground">{s.title} · {formatCell("created_at", s.created_at)}</div>
                 <Badge variant={s.status === "reviewed" ? "default" : s.status === "submitted" ? "secondary" : "outline"} className="capitalize mt-1 text-xs">{s.status.replace("_"," ")}</Badge>
               </CardContent>
             </Card>
