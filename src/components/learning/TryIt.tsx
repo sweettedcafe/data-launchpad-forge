@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Play, RotateCcw, Database, Sparkles } from "lucide-react";
+import { Loader2, Play, RotateCcw, Database, Sparkles, Download } from "lucide-react";
 import { loadCsvFromUrl, runQuery } from "@/lib/duckdb";
 import { supabase } from "@/integrations/supabase/client";
 import { formatCell } from "@/lib/format";
