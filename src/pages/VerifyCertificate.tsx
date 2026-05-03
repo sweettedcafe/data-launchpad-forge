@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Award, CheckCircle2, XCircle } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
+import { formatCell } from "@/lib/format";
 
 export default function VerifyCertificate() {
   const { code } = useParams();
@@ -33,7 +34,7 @@ export default function VerifyCertificate() {
                 <div><span className="text-muted-foreground">Recipient:</span> <span className="font-semibold">{cert.recipient_name}</span></div>
                 <div><span className="text-muted-foreground">Program:</span> {cert.program_name}</div>
                 <div><span className="text-muted-foreground">Code:</span> <code className="font-mono text-xs">{cert.certificate_code}</code></div>
-                <div><span className="text-muted-foreground">Issued:</span> {new Date(cert.issued_at).toLocaleDateString()}</div>
+                <div><span className="text-muted-foreground">Issued:</span> {formatCell("issued_at", cert.issued_at)}</div>
               </div>
               {cert.profiles?.handle && <Button asChild className="mt-6"><Link to={`/p/${cert.profiles.handle}`}>View portfolio</Link></Button>}
             </>
