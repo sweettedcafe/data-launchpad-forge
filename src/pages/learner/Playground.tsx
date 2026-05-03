@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Play, Send, Database, CheckCircle2 } from "lucide-react";
 import Editor from "@monaco-editor/react";
+import { formatCell } from "@/lib/format";
 import { compareResults, loadCsvFromUrl, runQuery } from "@/lib/duckdb";
 import { toast } from "sonner";
 
