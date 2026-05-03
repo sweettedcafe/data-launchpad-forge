@@ -1,7 +1,7 @@
 import { NavLink, Outlet, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, BookOpen, Code2, Briefcase, User, LogOut, ShieldCheck, Award } from "lucide-react";
+import { LayoutDashboard, BookOpen, Code2, Briefcase, User, LogOut, ShieldCheck, Award, MessageSquare, Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const learnerNav = [
