@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, ArrowLeft, Save, Send, MessageSquare } from "lucide-react";
 import { toast } from "sonner";
+import { formatCell } from "@/lib/format";
 
 export function MockInterviewList() {
   const { user } = useAuth();
@@ -82,7 +83,7 @@ export function MockInterviewList() {
               <CardContent className="p-4 flex items-center justify-between">
                 <div>
                   <div className="font-medium">{s.title}</div>
-                  <div className="text-xs text-muted-foreground">{new Date(s.created_at).toLocaleString()} · focus: {s.focus}</div>
+                  <div className="text-xs text-muted-foreground">{formatCell("created_at", s.created_at)} · focus: {s.focus}</div>
                 </div>
                 <Badge variant={s.status === "reviewed" ? "default" : s.status === "submitted" ? "secondary" : "outline"} className="capitalize">{s.status.replace("_", " ")}</Badge>
               </CardContent>
