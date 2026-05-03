@@ -8,8 +8,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 import { toast } from "sonner";
 import { Quiz } from "@/components/learning/Quiz";
+import { TryIt } from "@/components/learning/TryIt";
 
 export default function LessonView() {
   const { slug, lessonId } = useParams();
@@ -46,7 +48,10 @@ export default function LessonView() {
     <div className="container-page py-10 max-w-3xl">
       <Helmet><title>{lesson.title} — The Analytics Vanguard</title></Helmet>
       <Button variant="ghost" size="sm" asChild className="mb-4"><Link to={`/tracks/${slug}`}><ArrowLeft className="h-4 w-4 mr-2" /> Back to track</Link></Button>
-      <h1 className="font-display text-3xl md:text-4xl font-semibold mb-6">{lesson.title}</h1>
+      <h1 className="font-display text-3xl md:text-4xl font-semibold mb-3">{lesson.title}</h1>
+      {lesson.summary && (
+        <p className="text-lg text-muted-foreground mb-6 leading-relaxed">{lesson.summary}</p>
+      )}
 
       {lesson.video_url && (
         <div className="aspect-video rounded-lg overflow-hidden mb-6 bg-muted">
@@ -54,9 +59,13 @@ export default function LessonView() {
         </div>
       )}
 
-      <article className="prose prose-slate max-w-none prose-headings:font-display prose-pre:bg-primary prose-pre:text-primary-foreground">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{lesson.content || "_No content yet._"}</ReactMarkdown>
+      <article className="lesson-prose prose prose-slate max-w-none prose-headings:font-display prose-h2:mt-10 prose-h2:border-b prose-h2:pb-2 prose-a:text-primary">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{lesson.content || "_No content yet._"}</ReactMarkdown>
       </article>
+
+      {lesson.try_it_sql && (
+        <TryIt initialSql={lesson.try_it_sql} datasetSlugs={lesson.try_it_datasets ?? []} />
+      )}
 
       {quiz && (
         <div className="mt-10">
