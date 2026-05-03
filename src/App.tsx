@@ -23,6 +23,10 @@ import PublicPortfolio from "./pages/PublicPortfolio";
 import VerifyCertificate from "./pages/VerifyCertificate";
 import AdminOverview from "./pages/admin/Overview";
 import { AdminLearners, AdminCurriculum, AdminDatasets, AdminSubmissions, AdminCertificates } from "./pages/admin/Placeholders";
+import InterviewBank from "./pages/learner/InterviewBank";
+import { MockInterviewList, MockInterviewSession } from "./pages/learner/MockInterview";
+import AdminInterviewBank from "./pages/admin/InterviewBank";
+import AdminMockReviews from "./pages/admin/MockReviews";
 
 const queryClient = new QueryClient();
 
