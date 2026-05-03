@@ -250,7 +250,10 @@ export type Database = {
           module_id: string
           slug: string
           sort_order: number
+          summary: string | null
           title: string
+          try_it_datasets: string[] | null
+          try_it_sql: string | null
           video_url: string | null
         }
         Insert: {
@@ -260,7 +263,10 @@ export type Database = {
           module_id: string
           slug: string
           sort_order?: number
+          summary?: string | null
           title: string
+          try_it_datasets?: string[] | null
+          try_it_sql?: string | null
           video_url?: string | null
         }
         Update: {
@@ -270,7 +276,10 @@ export type Database = {
           module_id?: string
           slug?: string
           sort_order?: number
+          summary?: string | null
           title?: string
+          try_it_datasets?: string[] | null
+          try_it_sql?: string | null
           video_url?: string | null
         }
         Relationships: [
