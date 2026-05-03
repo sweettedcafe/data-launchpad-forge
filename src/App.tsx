@@ -23,6 +23,10 @@ import PublicPortfolio from "./pages/PublicPortfolio";
 import VerifyCertificate from "./pages/VerifyCertificate";
 import AdminOverview from "./pages/admin/Overview";
 import { AdminLearners, AdminCurriculum, AdminDatasets, AdminSubmissions, AdminCertificates } from "./pages/admin/Placeholders";
+import InterviewBank from "./pages/learner/InterviewBank";
+import { MockInterviewList, MockInterviewSession } from "./pages/learner/MockInterview";
+import AdminInterviewBank from "./pages/admin/InterviewBank";
+import AdminMockReviews from "./pages/admin/MockReviews";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +52,9 @@ const App = () => (
                 <Route path="/playground" element={<Playground />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/projects/:slug" element={<ProjectDetail />} />
+                <Route path="/interview" element={<InterviewBank />} />
+                <Route path="/mock-interview" element={<MockInterviewList />} />
+                <Route path="/mock-interview/:id" element={<MockInterviewSession />} />
                 <Route path="/profile" element={<Profile />} />
               </Route>
 
@@ -57,6 +64,8 @@ const App = () => (
                 <Route path="/admin/curriculum" element={<AdminCurriculum />} />
                 <Route path="/admin/datasets" element={<AdminDatasets />} />
                 <Route path="/admin/submissions" element={<AdminSubmissions />} />
+                <Route path="/admin/interview" element={<AdminInterviewBank />} />
+                <Route path="/admin/mock-interviews" element={<AdminMockReviews />} />
                 <Route path="/admin/certificates" element={<AdminCertificates />} />
               </Route>
 

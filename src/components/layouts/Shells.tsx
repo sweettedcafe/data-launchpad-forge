@@ -1,7 +1,7 @@
 import { NavLink, Outlet, Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { LayoutDashboard, BookOpen, Code2, Briefcase, User, LogOut, ShieldCheck, Award } from "lucide-react";
+import { LayoutDashboard, BookOpen, Code2, Briefcase, User, LogOut, ShieldCheck, Award, MessageSquare, Mic } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const learnerNav = [
@@ -9,6 +9,8 @@ const learnerNav = [
   { to: "/tracks", label: "Learning tracks", icon: BookOpen },
   { to: "/playground", label: "SQL playground", icon: Code2 },
   { to: "/projects", label: "Projects", icon: Briefcase },
+  { to: "/interview", label: "Interview prep", icon: MessageSquare },
+  { to: "/mock-interview", label: "Mock interview", icon: Mic },
   { to: "/profile", label: "Profile", icon: User },
 ];
 
@@ -90,6 +92,8 @@ const adminNav = [
   { to: "/admin/curriculum", label: "Curriculum", icon: BookOpen },
   { to: "/admin/datasets", label: "Datasets", icon: Code2 },
   { to: "/admin/submissions", label: "Submissions", icon: Briefcase },
+  { to: "/admin/interview", label: "Interview bank", icon: MessageSquare },
+  { to: "/admin/mock-interviews", label: "Mock reviews", icon: Mic },
   { to: "/admin/certificates", label: "Certificates", icon: Award },
 ];
 

@@ -165,6 +165,54 @@ export type Database = {
           },
         ]
       }
+      interview_questions: {
+        Row: {
+          category: string
+          created_at: string
+          created_by: string | null
+          difficulty: string
+          hints: string | null
+          id: string
+          is_published: boolean
+          prompt: string
+          sample_answer: string | null
+          source: string
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          difficulty?: string
+          hints?: string | null
+          id?: string
+          is_published?: boolean
+          prompt: string
+          sample_answer?: string | null
+          source?: string
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          difficulty?: string
+          hints?: string | null
+          id?: string
+          is_published?: boolean
+          prompt?: string
+          sample_answer?: string | null
+          source?: string
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       lesson_progress: {
         Row: {
           completed_at: string
@@ -234,6 +282,108 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      mock_interview_responses: {
+        Row: {
+          admin_feedback: string | null
+          admin_score: number | null
+          answer: string | null
+          created_at: string
+          id: string
+          question_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          self_rating: number | null
+          session_id: string
+          sort_order: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_feedback?: string | null
+          admin_score?: number | null
+          answer?: string | null
+          created_at?: string
+          id?: string
+          question_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          self_rating?: number | null
+          session_id: string
+          sort_order?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_feedback?: string | null
+          admin_score?: number | null
+          answer?: string | null
+          created_at?: string
+          id?: string
+          question_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          self_rating?: number | null
+          session_id?: string
+          sort_order?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mock_interview_responses_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "interview_questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mock_interview_responses_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "mock_interview_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mock_interview_sessions: {
+        Row: {
+          created_at: string
+          focus: string
+          id: string
+          overall_feedback: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          focus?: string
+          id?: string
+          overall_feedback?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          focus?: string
+          id?: string
+          overall_feedback?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       modules: {
         Row: {
