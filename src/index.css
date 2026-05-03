@@ -136,3 +136,54 @@
     color: transparent;
   }
 }
+
+/* Lesson content: callouts, highlights, tables */
+@layer components {
+  .lesson-prose mark,
+  .lesson-prose .hl {
+    background: hsl(var(--accent) / 0.35);
+    color: hsl(var(--foreground));
+    padding: 0.05em 0.3em;
+    border-radius: 0.25rem;
+    font-weight: 600;
+  }
+  .lesson-prose .callout {
+    @apply my-6 rounded-lg border-l-4 p-4 text-sm;
+    background: hsl(var(--muted) / 0.6);
+  }
+  .lesson-prose .callout > p:last-child { margin-bottom: 0; }
+  .lesson-prose .callout > p:first-child { margin-top: 0; }
+  .lesson-prose .callout-title {
+    @apply font-semibold mb-1 flex items-center gap-2 text-sm uppercase tracking-wide;
+  }
+  .lesson-prose .callout-tip   { border-color: hsl(var(--success)); background: hsl(var(--success) / 0.08); }
+  .lesson-prose .callout-warn  { border-color: hsl(var(--warning)); background: hsl(var(--warning) / 0.10); }
+  .lesson-prose .callout-key   { border-color: hsl(var(--accent));  background: hsl(var(--accent)  / 0.10); }
+  .lesson-prose .callout-note  { border-color: hsl(var(--primary)); background: hsl(var(--primary) / 0.06); }
+
+  .lesson-prose table {
+    @apply w-full text-sm border-collapse my-6;
+  }
+  .lesson-prose thead th {
+    @apply bg-muted text-left font-semibold px-3 py-2 border-b;
+  }
+  .lesson-prose tbody td {
+    @apply px-3 py-2 border-b align-top;
+  }
+  .lesson-prose tbody tr:nth-child(even) { background: hsl(var(--muted) / 0.35); }
+
+  .lesson-prose code:not(pre code) {
+    @apply font-mono text-[0.85em] px-1.5 py-0.5 rounded;
+    background: hsl(var(--muted));
+    color: hsl(var(--primary));
+  }
+  .lesson-prose pre {
+    @apply rounded-lg p-4 overflow-x-auto text-sm;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+  .lesson-prose blockquote {
+    @apply border-l-4 pl-4 italic text-muted-foreground;
+    border-color: hsl(var(--accent));
+  }
+}
