@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, Play, RotateCcw, Database, Sparkles } from "lucide-react";
 import { loadCsvFromUrl, runQuery } from "@/lib/duckdb";
 import { supabase } from "@/integrations/supabase/client";
+import { formatCell } from "@/lib/format";
 
 interface TryItProps {
   initialSql: string;
