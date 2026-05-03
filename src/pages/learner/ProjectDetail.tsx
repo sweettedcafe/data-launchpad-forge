@@ -29,7 +29,7 @@ export default function ProjectDetail() {
       setProject(p);
       if (p && user) {
         const { data: s } = await supabase.from("project_submissions").select("*").eq("user_id", user.id).eq("project_id", p.id).maybeSingle();
-        if (s) { setExisting(s); setSub({ title: s.title ?? "", writeup: s.writeup ?? "", code: s.code ?? "", dashboard_url: s.dashboard_url ?? "" }); }
+        if (s) { setExisting(s); setSub({ title: s.title ?? "", writeup: s.writeup ?? "", code: s.code ?? "", dashboard_url: s.dashboard_url ?? "", github_repo_url: s.github_repo_url ?? "" }); }
       }
     })();
   }, [slug, user]);
