@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Play, RotateCcw, Database, Sparkles } from "lucide-react";
+import { Loader2, Play, RotateCcw, Database, Sparkles, Download } from "lucide-react";
 import { loadCsvFromUrl, runQuery } from "@/lib/duckdb";
 import { supabase } from "@/integrations/supabase/client";
 import { formatCell } from "@/lib/format";
@@ -54,11 +54,21 @@ export function TryIt({ initialSql, datasetSlugs = [] }: TryItProps) {
         <div className="flex items-center gap-2">
           <Sparkles className="h-4 w-4 text-accent" />
           <span className="font-semibold text-sm">Try it yourself</span>
-          {datasetSlugs.map((s) => (
-            <Badge key={s} variant="secondary" className="font-mono text-[10px] gap-1">
-              <Database className="h-3 w-3" /> {s}
-            </Badge>
-          ))}
+          {datasetSlugs.map((s) => {
+            const meta = datasetMeta.find((m) => m.slug === s);
+            const url = meta ? supabase.storage.from("datasets").getPublicUrl(meta.storage_path).data.publicUrl : null;
+            return url ? (
+              <a key={s} href={url} download target="_blank" rel="noreferrer" title={`Download ${s}.csv`}>
+                <Badge variant="secondary" className="font-mono text-[10px] gap-1 hover:bg-accent hover:text-accent-foreground cursor-pointer">
+                  <Database className="h-3 w-3" /> {s} <Download className="h-3 w-3" />
+                </Badge>
+              </a>
+            ) : (
+              <Badge key={s} variant="secondary" className="font-mono text-[10px] gap-1">
+                <Database className="h-3 w-3" /> {s}
+              </Badge>
+            );
+          })}
         </div>
         <div className="flex gap-2">
           <Button size="sm" variant="ghost" onClick={() => { setSql(initialSql); setResult(null); setError(null); }}>
