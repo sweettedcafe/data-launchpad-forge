@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Play, Send, Database, CheckCircle2 } from "lucide-react";
 import Editor from "@monaco-editor/react";
+import { formatCell } from "@/lib/format";
 import { compareResults, loadCsvFromUrl, runQuery } from "@/lib/duckdb";
 import { toast } from "sonner";
 
@@ -177,7 +178,7 @@ export default function Playground() {
                     <tbody>
                       {result.rows.slice(0, 100).map((r, i) => (
                         <tr key={i} className="border-t">
-                          {result.columns.map((c) => <td key={c} className="px-3 py-2 font-mono text-xs">{r[c] == null ? <span className="text-muted-foreground">NULL</span> : String(r[c])}</td>)}
+                          {result.columns.map((c) => <td key={c} className="px-3 py-2 font-mono text-xs">{r[c] == null ? <span className="text-muted-foreground">NULL</span> : formatCell(c, r[c])}</td>)}
                         </tr>
                       ))}
                     </tbody>

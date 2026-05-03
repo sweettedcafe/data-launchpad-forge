@@ -16,6 +16,6 @@ export function AdminPlaceholder({ title, description }: { title: string; descri
 
 export const AdminLearners = () => <AdminPlaceholder title="Learners" description="See progress, scores, and outputs for every learner." />;
 export const AdminCurriculum = () => <AdminPlaceholder title="Curriculum" description="Create and edit tracks, modules, lessons, quizzes, and SQL exercises." />;
-export const AdminDatasets = () => <AdminPlaceholder title="Datasets" description="Upload CSVs that power lessons, exercises, and capstone projects." />;
+
 export const AdminSubmissions = () => <AdminPlaceholder title="Submissions" description="Review project submissions, score them against the rubric, and leave feedback." />;
 export const AdminCertificates = () => <AdminPlaceholder title="Certificates" description="Issue and revoke professional certificates." />;

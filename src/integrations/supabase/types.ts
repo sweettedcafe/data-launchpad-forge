@@ -478,6 +478,7 @@ export type Database = {
           dashboard_url: string | null
           feedback: string | null
           file_path: string | null
+          github_repo_url: string | null
           id: string
           project_id: string
           reviewed_at: string | null
@@ -495,6 +496,7 @@ export type Database = {
           dashboard_url?: string | null
           feedback?: string | null
           file_path?: string | null
+          github_repo_url?: string | null
           id?: string
           project_id: string
           reviewed_at?: string | null
@@ -512,6 +514,7 @@ export type Database = {
           dashboard_url?: string | null
           feedback?: string | null
           file_path?: string | null
+          github_repo_url?: string | null
           id?: string
           project_id?: string
           reviewed_at?: string | null

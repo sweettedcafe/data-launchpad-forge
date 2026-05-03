@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Loader2, Play, RotateCcw, Database, Sparkles } from "lucide-react";
 import { loadCsvFromUrl, runQuery } from "@/lib/duckdb";
 import { supabase } from "@/integrations/supabase/client";
+import { formatCell } from "@/lib/format";
 
 interface TryItProps {
   initialSql: string;
@@ -91,7 +92,7 @@ export function TryIt({ initialSql, datasetSlugs = [] }: TryItProps) {
                 <tbody>
                   {result.rows.slice(0, 50).map((r, i) => (
                     <tr key={i} className="border-t">
-                      {result.columns.map((c) => <td key={c} className="px-3 py-1.5 font-mono">{r[c] == null ? <span className="text-muted-foreground">NULL</span> : String(r[c])}</td>)}
+                      {result.columns.map((c) => <td key={c} className="px-3 py-1.5 font-mono">{r[c] == null ? <span className="text-muted-foreground">NULL</span> : formatCell(c, r[c])}</td>)}
                     </tr>
                   ))}
                 </tbody>

@@ -18,7 +18,7 @@ export default function ProjectDetail() {
   const { slug } = useParams();
   const { user } = useAuth();
   const [project, setProject] = useState<any>(null);
-  const [sub, setSub] = useState<any>({ title: "", writeup: "", code: "", dashboard_url: "" });
+  const [sub, setSub] = useState<any>({ title: "", writeup: "", code: "", dashboard_url: "", github_repo_url: "" });
   const [existing, setExisting] = useState<any>(null);
   const [saving, setSaving] = useState(false);
 
@@ -29,7 +29,7 @@ export default function ProjectDetail() {
       setProject(p);
       if (p && user) {
         const { data: s } = await supabase.from("project_submissions").select("*").eq("user_id", user.id).eq("project_id", p.id).maybeSingle();
-        if (s) { setExisting(s); setSub({ title: s.title ?? "", writeup: s.writeup ?? "", code: s.code ?? "", dashboard_url: s.dashboard_url ?? "" }); }
+        if (s) { setExisting(s); setSub({ title: s.title ?? "", writeup: s.writeup ?? "", code: s.code ?? "", dashboard_url: s.dashboard_url ?? "", github_repo_url: s.github_repo_url ?? "" }); }
       }
     })();
   }, [slug, user]);
@@ -77,6 +77,19 @@ export default function ProjectDetail() {
         <div><Label>Write-up (Markdown)</Label><Textarea rows={10} value={sub.writeup} disabled={locked} onChange={(e) => setSub({ ...sub, writeup: e.target.value })} placeholder="Your analysis, findings, and methodology..." /></div>
         <div><Label>Code (SQL / Python)</Label><Textarea rows={8} value={sub.code} disabled={locked} className="font-mono text-xs" onChange={(e) => setSub({ ...sub, code: e.target.value })} /></div>
         <div><Label>Dashboard URL (optional)</Label><Input value={sub.dashboard_url} disabled={locked} onChange={(e) => setSub({ ...sub, dashboard_url: e.target.value })} placeholder="https://..." /></div>
+        <div>
+          <Label>GitHub repository (optional)</Label>
+          <Input
+            value={sub.github_repo_url}
+            disabled={locked}
+            onChange={(e) => setSub({ ...sub, github_repo_url: e.target.value })}
+            placeholder="https://github.com/your-username/project-name"
+          />
+          <p className="text-xs text-muted-foreground mt-1">
+            Push your notebooks, SQL, and write-up to a public GitHub repo and paste the link here. New to GitHub?{" "}
+            <a href="https://docs.github.com/en/get-started/quickstart/create-a-repo" target="_blank" rel="noreferrer" className="underline">Create a repo</a>.
+          </p>
+        </div>
         {!locked && (
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => save("draft")} disabled={saving}>Save draft</Button>
