@@ -18,7 +18,7 @@ export default function ProjectDetail() {
   const { slug } = useParams();
   const { user } = useAuth();
   const [project, setProject] = useState<any>(null);
-  const [sub, setSub] = useState<any>({ title: "", writeup: "", code: "", dashboard_url: "" });
+  const [sub, setSub] = useState<any>({ title: "", writeup: "", code: "", dashboard_url: "", github_repo_url: "" });
   const [existing, setExisting] = useState<any>(null);
   const [saving, setSaving] = useState(false);
 
