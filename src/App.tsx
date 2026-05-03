@@ -52,6 +52,9 @@ const App = () => (
                 <Route path="/playground" element={<Playground />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/projects/:slug" element={<ProjectDetail />} />
+                <Route path="/interview" element={<InterviewBank />} />
+                <Route path="/mock-interview" element={<MockInterviewList />} />
+                <Route path="/mock-interview/:id" element={<MockInterviewSession />} />
                 <Route path="/profile" element={<Profile />} />
               </Route>
 
