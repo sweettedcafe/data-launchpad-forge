@@ -9,6 +9,8 @@ const learnerNav = [
   { to: "/tracks", label: "Learning tracks", icon: BookOpen },
   { to: "/playground", label: "SQL playground", icon: Code2 },
   { to: "/projects", label: "Projects", icon: Briefcase },
+  { to: "/interview", label: "Interview prep", icon: MessageSquare },
+  { to: "/mock-interview", label: "Mock interview", icon: Mic },
   { to: "/profile", label: "Profile", icon: User },
 ];
 
