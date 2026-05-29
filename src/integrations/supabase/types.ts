@@ -889,6 +889,15 @@ export type Database = {
         }
         Returns: boolean
       }
+      public_certificate_for_user: {
+        Args: { _user_id: string }
+        Returns: {
+          certificate_code: string
+          issued_at: string
+          program_name: string
+          recipient_name: string
+        }[]
+      }
       verify_certificate: {
         Args: { _code: string }
         Returns: {
