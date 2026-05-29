@@ -14,7 +14,10 @@ export default function VerifyCertificate() {
 
   useEffect(() => {
     if (!code) return;
-    supabase.from("certificates").select("*, profiles!certificates_user_id_fkey(full_name, handle)").eq("certificate_code", code).maybeSingle().then(({ data }) => { setCert(data); setLoading(false); });
+    supabase.rpc("verify_certificate", { _code: code }).maybeSingle().then(({ data }: any) => {
+      setCert(data ? { ...data, profiles: { full_name: data.full_name, handle: data.handle } } : null);
+      setLoading(false);
+    });
   }, [code]);
 
   if (loading) return <div className="container-page py-20 text-center">Verifying…</div>;
