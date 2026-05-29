@@ -23,7 +23,7 @@ export default function PublicPortfolio() {
       setProfile(prof);
       const [{ data: subs }, { data: c }] = await Promise.all([
         supabase.from("project_submissions").select("*, projects(title, slug)").eq("user_id", prof.id).eq("status", "approved"),
-        supabase.from("certificates").select("*").eq("user_id", prof.id).is("revoked_at", null).maybeSingle(),
+        supabase.rpc("public_certificate_for_user", { _user_id: prof.id }).maybeSingle(),
       ]);
       setProjects(subs ?? []);
       setCert(c);
