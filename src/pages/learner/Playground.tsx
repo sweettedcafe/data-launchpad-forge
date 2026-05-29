@@ -26,7 +26,7 @@ export default function Playground() {
   useEffect(() => {
     (async () => {
       const [{ data: ex }, { data: ds }, { data: subs }] = await Promise.all([
-        supabase.from("exercises").select("*").order("created_at"),
+        supabase.from("exercises_public").select("*").order("created_at"),
         supabase.from("datasets").select("*"),
         user ? supabase.from("exercise_submissions").select("exercise_id").eq("user_id", user.id).eq("is_correct", true) : Promise.resolve({ data: [] as any[] }),
       ]);
