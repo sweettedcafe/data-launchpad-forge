@@ -25,7 +25,7 @@ export default function LessonView() {
     (async () => {
       const { data: l } = await supabase.from("lessons").select("*").eq("id", lessonId).maybeSingle();
       setLesson(l);
-      const { data: q } = await supabase.from("quizzes").select("*, quiz_questions(*)").eq("lesson_id", lessonId).maybeSingle();
+      const { data: q } = await supabase.from("quizzes").select("*, quiz_questions:quiz_questions_public(*)").eq("lesson_id", lessonId).maybeSingle();
       setQuiz(q);
       if (user) {
         const { data: prog } = await supabase.from("lesson_progress").select("id").eq("user_id", user.id).eq("lesson_id", lessonId).maybeSingle();
