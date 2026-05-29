@@ -29,20 +29,11 @@ export default function AdminSubmissions() {
 
   const load = async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from("project_submissions")
-      .select("*, projects(title, slug), profiles!project_submissions_user_id_fkey(full_name, email, handle)")
-      .order("updated_at", { ascending: false });
-    // The FK alias may not exist; fall back if needed
-    if (!data) {
-      const { data: alt } = await supabase.from("project_submissions").select("*, projects(title, slug)").order("updated_at", { ascending: false });
-      const ids = Array.from(new Set((alt ?? []).map((s: any) => s.user_id)));
-      const { data: profs } = await supabase.from("profiles").select("id, full_name, email, handle").in("id", ids);
-      const map = new Map((profs ?? []).map((p: any) => [p.id, p]));
-      setItems((alt ?? []).map((s: any) => ({ ...s, profiles: map.get(s.user_id) })));
-    } else {
-      setItems(data);
-    }
+    const { data: alt } = await supabase.from("project_submissions").select("*, projects(title, slug)").order("updated_at", { ascending: false });
+    const ids = Array.from(new Set((alt ?? []).map((s: any) => s.user_id)));
+    const { data: profs } = ids.length ? await supabase.from("profiles").select("id, full_name, email, handle").in("id", ids) : { data: [] as any[] };
+    const map = new Map((profs ?? []).map((p: any) => [p.id, p]));
+    setItems((alt ?? []).map((s: any) => ({ ...s, profiles: map.get(s.user_id) })));
     setLoading(false);
   };
 
