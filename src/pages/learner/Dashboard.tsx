@@ -21,7 +21,7 @@ export default function LearnerDashboard() {
         supabase.from("lessons").select("*", { count: "exact", head: true }),
         supabase.from("lesson_progress").select("*", { count: "exact", head: true }).eq("user_id", user.id),
         supabase.from("project_submissions").select("*", { count: "exact", head: true }).eq("user_id", user.id).eq("status", "approved"),
-        supabase.from("exercises").select("*", { count: "exact", head: true }),
+        supabase.from("exercises_public").select("*", { count: "exact", head: true }),
         supabase.from("exercise_submissions").select("*", { count: "exact", head: true }).eq("user_id", user.id).eq("is_correct", true),
         supabase.from("certificates").select("*").eq("user_id", user.id).maybeSingle(),
         supabase.from("profiles").select("*").eq("id", user.id).maybeSingle(),
