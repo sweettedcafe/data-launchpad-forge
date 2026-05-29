@@ -18,7 +18,7 @@ export default function PublicPortfolio() {
   useEffect(() => {
     if (!handle) return;
     (async () => {
-      const { data: prof } = await supabase.from("profiles").select("*").eq("handle", handle).maybeSingle();
+      const { data: prof } = await supabase.from("profiles_public").select("*").eq("handle", handle).maybeSingle();
       if (!prof) return;
       setProfile(prof);
       const [{ data: subs }, { data: c }] = await Promise.all([
