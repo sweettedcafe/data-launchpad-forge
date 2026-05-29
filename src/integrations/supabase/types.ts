@@ -116,6 +116,13 @@ export type Database = {
             referencedRelation: "exercises"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "exercise_submissions_exercise_id_fkey"
+            columns: ["exercise_id"]
+            isOneToOne: false
+            referencedRelation: "exercises_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       exercises: {
@@ -123,6 +130,7 @@ export type Database = {
           created_at: string
           dataset_ids: string[]
           difficulty: string
+          expected_result_json: Json | null
           expected_sql: string | null
           id: string
           lesson_id: string | null
@@ -135,6 +143,7 @@ export type Database = {
           created_at?: string
           dataset_ids?: string[]
           difficulty?: string
+          expected_result_json?: Json | null
           expected_sql?: string | null
           id?: string
           lesson_id?: string | null
@@ -147,6 +156,7 @@ export type Database = {
           created_at?: string
           dataset_ids?: string[]
           difficulty?: string
+          expected_result_json?: Json | null
           expected_sql?: string | null
           id?: string
           lesson_id?: string | null
@@ -742,15 +752,163 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      exercises_public: {
+        Row: {
+          created_at: string | null
+          dataset_ids: string[] | null
+          difficulty: string | null
+          gradable: boolean | null
+          id: string | null
+          lesson_id: string | null
+          order_matters: boolean | null
+          prompt: string | null
+          starter_sql: string | null
+          title: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          dataset_ids?: string[] | null
+          difficulty?: string | null
+          gradable?: never
+          id?: string | null
+          lesson_id?: string | null
+          order_matters?: boolean | null
+          prompt?: string | null
+          starter_sql?: string | null
+          title?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          dataset_ids?: string[] | null
+          difficulty?: string | null
+          gradable?: never
+          id?: string | null
+          lesson_id?: string | null
+          order_matters?: boolean | null
+          prompt?: string | null
+          starter_sql?: string | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercises_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles_public: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          full_name: string | null
+          handle: string | null
+          headline: string | null
+          id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          handle?: string | null
+          headline?: string | null
+          id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          handle?: string | null
+          headline?: string | null
+          id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      quiz_questions_public: {
+        Row: {
+          id: string | null
+          options: Json | null
+          question: string | null
+          quiz_id: string | null
+          sort_order: number | null
+        }
+        Insert: {
+          id?: string | null
+          options?: Json | null
+          question?: string | null
+          quiz_id?: string | null
+          sort_order?: number | null
+        }
+        Update: {
+          id?: string | null
+          options?: Json | null
+          question?: string | null
+          quiz_id?: string | null
+          sort_order?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_questions_quiz_id_fkey"
+            columns: ["quiz_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
+      grade_exercise: {
+        Args: { _exercise_id: string; _sql_text: string; _submitted: Json }
+        Returns: {
+          gradable: boolean
+          is_correct: boolean
+        }[]
+      }
+      grade_quiz: {
+        Args: { _answers: Json; _quiz_id: string }
+        Returns: {
+          pass_threshold: number
+          passed: boolean
+          per_question: Json
+          score: number
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      public_certificate_for_user: {
+        Args: { _user_id: string }
+        Returns: {
+          certificate_code: string
+          issued_at: string
+          program_name: string
+          recipient_name: string
+        }[]
+      }
+      verify_certificate: {
+        Args: { _code: string }
+        Returns: {
+          certificate_code: string
+          full_name: string
+          handle: string
+          issued_at: string
+          program_name: string
+          recipient_name: string
+          revoked_at: string
+        }[]
       }
     }
     Enums: {

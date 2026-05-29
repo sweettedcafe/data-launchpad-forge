@@ -26,7 +26,7 @@ export default function Playground() {
   useEffect(() => {
     (async () => {
       const [{ data: ex }, { data: ds }, { data: subs }] = await Promise.all([
-        supabase.from("exercises").select("*").order("created_at"),
+        supabase.from("exercises_public").select("*").order("created_at"),
         supabase.from("datasets").select("*"),
         user ? supabase.from("exercise_submissions").select("exercise_id").eq("user_id", user.id).eq("is_correct", true) : Promise.resolve({ data: [] as any[] }),
       ]);
@@ -69,17 +69,17 @@ export default function Playground() {
     try {
       await ensureLoaded();
       const userResult = await runQuery(sql);
-      let isCorrect = false;
-      if (selected.expected_sql) {
-        const expected = await runQuery(selected.expected_sql);
-        isCorrect = compareResults(userResult.rows, expected.rows, selected.order_matters);
-      }
       setResult(userResult);
-      await supabase.from("exercise_submissions").insert({
-        user_id: user.id, exercise_id: selected.id, sql_text: sql, is_correct: isCorrect,
-        result_preview: userResult.rows.slice(0, 20),
+      const { data, error: rpcErr } = await supabase.rpc("grade_exercise", {
+        _exercise_id: selected.id,
+        _submitted: userResult.rows as any,
+        _sql_text: sql,
       });
-      if (isCorrect) {
+      if (rpcErr) throw rpcErr;
+      const row = (data as any)?.[0];
+      if (!row?.gradable) {
+        toast.warning("This exercise isn't auto-gradable yet — your submission was saved.");
+      } else if (row.is_correct) {
         toast.success("Correct! Saved to your progress.");
         setSolved(new Set([...solved, selected.id]));
       } else {

@@ -18,12 +18,12 @@ export default function PublicPortfolio() {
   useEffect(() => {
     if (!handle) return;
     (async () => {
-      const { data: prof } = await supabase.from("profiles").select("*").eq("handle", handle).maybeSingle();
+      const { data: prof } = await supabase.from("profiles_public").select("*").eq("handle", handle).maybeSingle();
       if (!prof) return;
       setProfile(prof);
       const [{ data: subs }, { data: c }] = await Promise.all([
         supabase.from("project_submissions").select("*, projects(title, slug)").eq("user_id", prof.id).eq("status", "approved"),
-        supabase.from("certificates").select("*").eq("user_id", prof.id).is("revoked_at", null).maybeSingle(),
+        supabase.rpc("public_certificate_for_user", { _user_id: prof.id }).maybeSingle(),
       ]);
       setProjects(subs ?? []);
       setCert(c);
